@@ -25,6 +25,8 @@ const int yBPin = 9; //yellow button
 const int gBPin = 10; //green button
 const int wBPin = 11; //white button
 
+  int count2 = 0;
+  int onLight[] = {0,0,0,0};
 // the setup function runs once when you press reset or power the board
 void setup() {
 
@@ -46,14 +48,51 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  //flash LEDs 5 times to signal start up
+ flash();
+
+  //game start
+  int light = ranLight();
+  //make loop here and call ranLght() again
+ 
+  for (int numLights = 0; numLights <= 5; numLights++)
+  {
+    while (count2 <= numLights)
+    {
+      lightON(light);
+
+
+      count2++;
+    }//end while loop
+  }//end for loop
+
+
+//buttion press verification
+
+//red button
+int rBState = digitalRead(rBPin);
+if(rBState =HIGH) //pressed
+  if(!(onLight[0] = 1))
+  flash();
+  
+  
+
+
+
+}//end void loop
+
+//flash lights
+void flash()
+{
+
+//flash LEDs 5 times to signal start up
   int count = 0;
   int i = 0;
   //loop to move through array of pin numbers
+  int pinNum[] = {2, 3, 4, 5, 6};
+  int currentPin = pinNum[i];
   while (count <= 5) {
     while (i <= 5) {
-int pinNum[] = {2,3,4,5,6};
-int currentPin = pinNum[i];
+currentPin = pinNum[i];
 
       digitalWrite(currentPin, HIGH);   // turn the LED on (HIGH is the voltage level)
       delay(500);                       // wait for .5 second
@@ -62,66 +101,67 @@ int currentPin = pinNum[i];
       i++;
       count = count + 1;
     }//end while loop
-  }//end while loop
-
-//game start
-int light = ranLight();
-//make loop here and call ranLght() again
-int count2 = 0;
-for(int numLights = 0; numLights<=10; numLights++)
-{
-  while(count2<=numLights)
-  {
-lightON(light);
-  
-  
-  count2++;
-  }//end while loop
-}//end for loop
-  
-}//end void loop
+  }//end while loop  
+}//end flash method
 
 //ranLight method
 ////generates which light turns on
-int ranLight() 
+int ranLight()
 {
-int LED1, LED2, LED3, LED4;
-int ran = random(1, 4);
-int on; //which light gets turned on
-//switch for selecting lights
-switch (ran)
-{
-case 1:
-on = LED1;
-break;
+  int LED1, LED2, LED3, LED4, LED5;
+  int ran = random(1, 5);
+  int on; //which light gets turned on
+  //switch for selecting lights
+  switch (ran)
+  {
+    case 1:
+      on = LED1;
+      break;
 
-case 2:
-on = LED2;
-break;
+    case 2:
+      on = LED2;
+      break;
 
-case 3:
-on = LED3;
-break;
+    case 3:
+      on = LED3;
+      break;
 
-case 4:
-on = LED4;
-break;
-}//end switch
-return on;
-}//end ranGen method
+    case 4:
+      on = LED4;
+      break;
+
+    case 5:
+      on = LED5;
+      break;
+  }//end switch
+  return on;
+}//end ranLight method
 
 void lightON(int light)
 {
-if(light == 1)
-digitalWrite(rLEDPin, HIGH);
-else if(light == 2)
-digitalWrite(bLEDPin, HIGH);
-else if(light == 3)
-digitalWrite(yLEDPin, HIGH);
-else if(light == 4)
-digitalWrite(gLEDPin, HIGH);
-else if(light ==5)
-digitalWrite(wLEDPin, HIGH);
+//array for which lights were turned on
+onLight[count2] = light;
+  
+  if (light == 1)
+    {digitalWrite(rLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(rLEDPin, LOW);}
+  else if (light == 2)
+   { digitalWrite(bLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(bLEDPin, LOW);}
+  else if (light == 3)
+   { digitalWrite(yLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(yLEDPin, LOW);}
+  else if (light == 4)
+   { digitalWrite(gLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(gLEDPin, LOW);}
+  else if (light == 5)
+  {  digitalWrite(wLEDPin, HIGH);
+    delay(1000);
+    digitalWrite(wLEDPin, LOW); }
 
 }//end lightON method
 
