@@ -66,7 +66,7 @@ void game()
 
 
   //wait for user input
-  delay(3000);
+  //delay(3000);
   while (!(wait = 5))
   {
     //user selection
@@ -79,12 +79,12 @@ void game()
   int twoWrong = 0;
   while (twoWrong < 2) {
     //compare user input to light pattern
-    if (compare() == -1)
+    if (compare() == false)
     {
       redoPattern();
       twoWrong++;
       //wait for user input
-      delay(3000);
+      //delay(1000);
       while (!(wait = 5))
       {
         //user selection
@@ -93,7 +93,7 @@ void game()
       }//while loop
     }//end if compare
   }//end two wrong loop
-}
+}//end game method
 
 //start up light pattern
 void litLights()
@@ -102,13 +102,13 @@ void litLights()
   resetOut();
 
   //fancy pattern
-  digitalWrite(gLEDPin, HIGH);
+  digitalWrite(rLEDPin, HIGH);
   digitalWrite(wLEDPin, HIGH);
   delay(500);
-  digitalWrite(bLEDPin, HIGH);
+  digitalWrite(gLEDPin, HIGH);
   digitalWrite(yLEDPin, HIGH);
   delay(500);
-  digitalWrite(rLEDPin, HIGH);
+  digitalWrite(bLEDPin, HIGH);
   delay(1000);
   digitalWrite(gLEDPin, LOW);
   digitalWrite(wLEDPin, LOW);
@@ -173,35 +173,35 @@ char ranLight()
 
   if (ran == 1) {
     digitalWrite(gLEDPin, HIGH);
-    delay(500);
+    delay(700);
     digitalWrite(gLEDPin, LOW);
     //onLight[0] = 'g';
     light = 'g';
   }
   else if (ran == 2) {
     digitalWrite(bLEDPin, HIGH);
-    delay(500);
+    delay(700);
     digitalWrite(bLEDPin, LOW);
     //onLight[1] = 'b';
     light = 'b';
   }
   else if (ran == 3) {
     digitalWrite(rLEDPin, HIGH);
-    delay(500);
+    delay(700);
     digitalWrite(rLEDPin, LOW);
     //onLight[2] = 'r';
     light = 'r';
   }
   else if (ran == 4) {
     digitalWrite(yLEDPin, HIGH);
-    delay(500);
+    delay(700);
     digitalWrite(yLEDPin, LOW);
     //onLight[3] = 'y';
     light = 'y';
   }
   else if (ran == 5) {
     digitalWrite(wLEDPin, HIGH);
-    delay(500);
+    delay(700);
     digitalWrite(wLEDPin, LOW);
     //onLight[4] = 'w';
     light = 'w';
@@ -215,31 +215,31 @@ void redoPattern()
   //reset pins to recieve output
   resetOut();
 
-  for (int i = 0; i <= 5; i++)
+  for (int i = 0; i <= 5; i++) //goes through array to turn on correct lights
   {
     if (onLight[i] =  'g') {
       digitalWrite(gLEDPin, HIGH);
-      delay(1000);
+      delay(800);
       digitalWrite(gLEDPin, LOW);
     }
     else if (onLight[i] = 'b') {
       digitalWrite(bLEDPin, HIGH);
-      delay(1000);
+      delay(800);
       digitalWrite(bLEDPin, LOW);
     }
     else if (onLight[i] = 'r') {
       digitalWrite(rLEDPin, HIGH);
-      delay(1000);
+      delay(800);
       digitalWrite(rLEDPin, LOW);
     }
     else if (onLight[3] = 'y') {
       digitalWrite(yLEDPin, HIGH);
-      delay(1000);
+      delay(800);
       digitalWrite(yLEDPin, LOW);
     }
     else if (onLight[4] = 'w') {
       digitalWrite(wLEDPin, HIGH);
-      delay(1000);
+      delay(800);
       digitalWrite(wLEDPin, LOW);
     }
   }//end for loop
@@ -280,26 +280,26 @@ void userSel()
 }//end user selection
 
 //compare string arrays
-int compare()
+boolean compare()
 {
   //reset pins to recieve output
   resetOut();
 
-  int result = 0;
+  boolean result;
   //compare arrays
   for (int i = 0; i <= 5; i++)
   {
     if ((userIn[i] == onLight[i])) //if they do match
     { right();
-      result = 1;
+      result = true;
     }
     else {
       wrong();
-      result = -1;
+      result = false;
     }
     delay(2000);
   }//end for loop
-  return result; //if -1 its wrong. If 1, its right. Used to determing if lights replay
+  return result; //if false its wrong. If true, its right. Used to determine if lights replay
 }//end compare string arrays
 
 //wrong input
@@ -311,7 +311,7 @@ void wrong()
   for (int a = 0; a <= 5; a++)
   {
     digitalWrite(rLEDPin, HIGH);
-    delay(300);
+    delay(200);
     digitalWrite(rLEDPin, LOW);
   }//end for loop
 }//end wrong method
@@ -325,7 +325,7 @@ void right()
   for (int a = 0; a <= 5; a++)
   {
     digitalWrite(gLEDPin, HIGH);
-    delay(300);
+    delay(200);
     digitalWrite(gLEDPin, LOW);
   }//end for loop
 
@@ -346,10 +346,10 @@ void resetOut()
 void resetIn()
 {
   //Buttons\\
-  pinMode(rBPin, INPUT); //button 3 (red)
-  pinMode(bBPin, INPUT); //button 2 (blue)
-  pinMode(yBPin, INPUT); //button 4 (yellow)
-  pinMode(gBPin, INPUT); //button 1 (green)
-  pinMode(wBPin, INPUT); //button 5 (white)
+  pinMode(rBPin, INPUT); //button (red)
+  pinMode(bBPin, INPUT); //button (blue)
+  pinMode(yBPin, INPUT); //button (yellow)
+  pinMode(gBPin, INPUT); //button (green)
+  pinMode(wBPin, INPUT); //button (white)
 }//end reset in
 
